@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { Container, AppBar, Typography, Grow, Grid } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { getPosts } from "./actions/posts";
+import tlemcen from "./images/tlemcen.jpg";
+import Posts from "./components/Posts/Posts";
+import Form from "./components/Form/Form";
+import useStyles from "./styles";
 
-function App() {
+const App = () => {
+  const classes = useStyles();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPosts);
+  }, [dispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Container maxidth="lg">
+      <AppBar className={classes.appBar} position="static" color="inherit">
+        <Typography className={classes.heading} variant="h2" align="center">
+          souvenirs
+        </Typography>
+        <img
+          className={classes.image}
+          src={tlemcen}
+          alt="souvenirs"
+          height="400"
+          width="500"
+        />
+      </AppBar>
+      <Grow in>
+        <Grid
+          container
+          justify="space-between"
+          alignItems="stretch"
+          spacing={3}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Grid item xs={12} sm={7}>
+            <Posts />
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <Form />
+          </Grid>
+        </Grid>
+      </Grow>
+    </Container>
   );
-}
+};
 
 export default App;
